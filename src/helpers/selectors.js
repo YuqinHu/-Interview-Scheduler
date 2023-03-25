@@ -1,4 +1,4 @@
-export function getAppointmentsForDay(state, day) {
+function getAppointmentsForDay(state, day) {
   const selectedDay = state.days.find((d) => d.name === day);
 
   if (!selectedDay) {
@@ -9,3 +9,5 @@ export function getAppointmentsForDay(state, day) {
 
   return appointments;
 }
+
+module.exports =  getAppointmentsForDay;
