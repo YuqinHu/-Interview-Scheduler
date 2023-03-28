@@ -28,13 +28,11 @@ export default function Application(props) {
       axios.get('http://localhost:8001/api/appointments'),
       axios.get('http://localhost:8001/api/interviewers')
     ]).then((all) => {
-      console.log("all", all)
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
     });
   }, []);
 
   function bookInterview(id, interview) {
-    console.log("State", state)
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -44,16 +42,33 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    console.log("appointments", appointments)
     return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
     .then(res => {
         setState({...state, appointments})
       })
   }
+
+  function cancelInterview(id) {
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    .then(res => {
+      setState({...state, appointments})
+    })
+  }
+
   
   
   const interviewersForDay = getInterviewersForDay(state, state.day)
-  console.log("interviewersForDay",interviewersForDay)
   const dailyAppointments = getAppointmentsForDay(state, state.day)
 
   return (
@@ -90,6 +105,7 @@ export default function Application(props) {
               interview={interview} 
               interviewers = {interviewersForDay}
               bookInterview={bookInterview}
+              cancelInterview={cancelInterview}
             />
           )})}
          <Appointment key="last" time="5pm" />
