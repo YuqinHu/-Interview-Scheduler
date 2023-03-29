@@ -13,7 +13,6 @@ export default function Application(props) {
 
 
   const setDay = day => setState({ ...state, day });
-  const setDays = days => setState(prev => ({ ...prev, days }));
 
   useEffect(() => {
     Promise.all([
