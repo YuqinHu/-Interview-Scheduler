@@ -53,8 +53,8 @@ export default function Form(props) {
           onChange={setInterviewer}
         />
       </section>
-      <section className="appointment__card-right">
-        <section className="appointment__actions">
+      <section className="appointment__card-right" >
+        <section className="appointment__actions" >
           <Button danger onClick={cancel}>Cancel</Button>
           <Button confirm onSubmit={event => event.preventDefault()} onClick={validate}>Save</Button>
         </section>
