@@ -1,6 +1,6 @@
 import React from "react";
 import { render, cleanup } from "@testing-library/react";
-import { fireEvent, waitForElement, getByText, prettyDOM, getAllByTestId, getByPlaceholderText, getByAltText, act } from "@testing-library/react";
+import { fireEvent, waitForElement, getByText, prettyDOM, getAllByTestId, getByPlaceholderText, getByAltText, act, queryByText } from "@testing-library/react";
 import Application from "components/Application";
 
 afterEach(cleanup);
@@ -15,14 +15,14 @@ it("defaults to Monday and changes the schedule when a new day is selected", () 
   return waitForElement(() => getByText("Monday")).then(() => {
 
     act(() => {
-    fireEvent.click(getByText("Tuesday"));
+      fireEvent.click(getByText("Tuesday"));
     })
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
 });
 
 it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
-  const { container } = render(<Application />);
+  const { container, debug } = render(<Application />);
 
   await waitForElement(() => getByText(container, "Archie Cohen"));
 
@@ -34,9 +34,17 @@ it("loads data, books an interview and reduces the spots remaining for Monday by
   fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
     target: { value: "Lydia Miller-Jones" }
   });
-  fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
 
+  fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
   fireEvent.click(getByText(appointment, "Save"));
 
-  console.log(prettyDOM(appointment));
+  expect(getByText(appointment, "Saving")).toBeInTheDocument();
+
+  await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+
+  const day = getAllByTestId(container, "day").find(day =>
+    queryByText(day, "Monday")
+  );
+
+  expect(getByText(day, "no spots remaining")).toBeInTheDocument();
 });
