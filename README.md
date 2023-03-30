@@ -21,3 +21,7 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Screenshot
+!["Screenshot of tablet page"](https://github.com/YuqinHu/tweeter/blob/master/public/images/tablet1.png)
+!["Screenshot of tablet page"](https://github.com/YuqinHu/tweeter/blob/master/public/images/tablet2.png)
