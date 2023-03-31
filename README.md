@@ -23,5 +23,5 @@ npm run storybook
 ```
 
 ## Screenshot
-!["Screenshot of tablet page"](https://github.com/YuqinHu/tweeter/blob/master/public/images/tablet1.png)
-!["Screenshot of tablet page"](https://github.com/YuqinHu/tweeter/blob/master/public/images/tablet2.png)
+!["Screenshot "](https://github.com/YuqinHu/Interview-Scheduler/blob/master/public/images/screen1.png)
+!["Screenshot "](https://github.com/YuqinHu/Interview-Scheduler/blob/master/public/images/screen2.png)
