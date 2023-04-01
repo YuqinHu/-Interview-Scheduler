@@ -26,7 +26,7 @@ const useVisualMode = (initial) => {
       let replaceHistory = [...prev];
       return replaceHistory;
     });
-    if(mode =="ERROR_SAVE") {
+    if(mode ==="ERROR_SAVE") {
       if (history.length > 1) {
         setMode((prev) => history[(history.length - 1)]);
       }
