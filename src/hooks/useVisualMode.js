@@ -12,18 +12,30 @@ const useVisualMode = (initial) => {
     } else {
       setMode((prev) => newMode);
       let newHistory = [...history];
-      newHistory.push(newMode);
+      if(newHistory[newHistory.length - 1] !== newMode){
+        newHistory.push(newMode);
+      }
+
       setHistory((prev) => newHistory);
     }
   };
 
+  //set mode for different suation
   const back = () => {
-    let newHistory = [...history];
-    newHistory.pop(mode);
-    setHistory((prev) => newHistory);
-    if (history.length > 1) {
-      setMode((prev) => newHistory[(newHistory.length - 1)]);
+    setHistory(prev => {
+      let replaceHistory = [...prev];
+      return replaceHistory;
+    });
+    if(mode =="ERROR_SAVE") {
+      if (history.length > 1) {
+        setMode((prev) => history[(history.length - 1)]);
+      }
+    } else {
+      if (history.length > 1) {
+        setMode((prev) => history[(history.length - 2)]);
+      }
     }
+
   };
 
   return { mode, transition, back }

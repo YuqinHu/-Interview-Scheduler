@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import "components/Appointment/styles.scss";
 import Header from "components/Appointment/Header";
 import Show from "components/Appointment/Show";
@@ -25,23 +25,21 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-
   function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
-  
     transition(SAVING);
-  
     props
       .bookInterview(props.id, interview)
-      .then(() => transition(SHOW))
-      .catch(error => transition(ERROR_SAVE, true));
+      .then(() => {transition(SHOW)
+      console.log("1")})
+      .catch(error => {transition(ERROR_SAVE, true)
+      console.log("2")});
   }
 
   function remove() {
-
     if (mode === CONFIRM) {
       transition(DELETING, true)
       props.cancelInterview(props.id)
@@ -84,6 +82,7 @@ export default function Appointment(props) {
         />}
       {mode === EDIT &&
         <Form 
+          student={props.interview.student}
           interviewers={props.interviewers}
           onSave={save}
           onCancel={back}
