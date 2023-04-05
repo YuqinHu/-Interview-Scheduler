@@ -9,7 +9,6 @@ import Form from 'components/Appointment/Form';
 import Confirm from 'components/Appointment/Confirm';
 import Error from 'components/Appointment/Error';
 
-
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
@@ -20,6 +19,8 @@ const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
+// This component displays an appointment in different modes
+// based on the value of the `mode` state variable returned by the `useVisualMode` custom hook
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY

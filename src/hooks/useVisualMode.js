@@ -1,44 +1,27 @@
 import { useState } from 'react';
 
+// custom hook that takes an initial state and returns an object with three properties
 const useVisualMode = (initial) => {
-  const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
   const transition = (newMode, replace = false) => {
     if (replace) {
-      setMode((prev) => newMode)
-      let replaceHistory = [...history];
-      replaceHistory[replaceHistory.length - 1] = mode;
-      setHistory((prev) => replaceHistory);
+      setHistory(prev => [...prev.slice(0,-1), newMode]);
     } else {
-      setMode((prev) => newMode);
-      let newHistory = [...history];
-      if(newHistory[newHistory.length - 1] !== newMode){
-        newHistory.push(newMode);
-      }
-
-      setHistory((prev) => newHistory);
+      setHistory(prev => [...prev, newMode]);
     }
   };
 
-  //set mode for different suation
+//function that goes back to the previous mode in the history, if there is one. 
+//It updates the history state accordingly.
   const back = () => {
-    setHistory(prev => {
-      let replaceHistory = [...prev];
-      return replaceHistory;
-    });
-    if(mode ==="ERROR_SAVE") {
-      if (history.length > 1) {
-        setMode((prev) => history[(history.length - 1)]);
-      }
-    } else {
-      if (history.length > 1) {
-        setMode((prev) => history[(history.length - 2)]);
-      }
+    if (history.length > 1) {
+      setHistory(prev => [...prev.slice(0, -1)]);
     }
-
+    else {
+      setHistory(prev => prev)
+    }
   };
-
-  return { mode, transition, back }
+  return { mode:history[history.length - 1], transition, back }
 }
 
 export default useVisualMode;

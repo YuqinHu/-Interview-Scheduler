@@ -7,13 +7,13 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     interviewers: {},
-    // you may put the line below, but will have to remove/comment hardcoded appointments variable
     appointments: {}
   });
 
 
   const setDay = day => setState({ ...state, day });
 
+  //sed to fetch data from the API server on page load, and update the state accordingly
   useEffect(() => {
     Promise.all([
       axios.get('/api/days'),
@@ -24,6 +24,8 @@ export default function Application(props) {
     });
   }, []);
 
+
+  //update the number of spots remaining for each day when appointments are added or deleted
   const updateSpots = (appointments) => {
     const dayOfWeek = state.days.find((day) => day.name === state.day
     );
@@ -39,6 +41,7 @@ export default function Application(props) {
     return newDayArray;
   };
 
+  //are used to handle updating appointments
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -58,8 +61,9 @@ export default function Application(props) {
       })
   }
 
-  function cancelInterview(id) {
 
+  //are used to handle deleting appointments
+  function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
       interview: null
